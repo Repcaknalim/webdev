@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html lang = "pl">
+<head>
+	<meta charset = "utf-8"/>
+	<meta http-equiv = "X-UA-Compatible" content = "IE = edge,chrome=1" /> <!-- wymuś najnowszego IE, poprawne wyświetlanie dla rodziny IE -->
+	
+	<title> Matematyka JS </title>
+	
+	<meta name = "description" content = "Opis strony w wyszukiwarce [155..160 znaków]" />
+	<meta name = "keywords" content = "Keywordy, dla, wyszukiwarki" />
+
+	<link rel = "stylesheet" href = "style.css" type = "text/css"/>
+</head>
+
+<body>
+	
+	<script>
+		document.write("Problem wartości maksymalnej: <br/>");
+		document.write(Math.pow(2,53)); document.write(" Wartość maksymalna (do której wszystkie liczby są poprawnie reprezentowane) <br/>");
+		document.write(Math.pow(2,53)+1); document.write(" Wartość maksymalna +1 = błąd <br/>");
+		document.write(Math.pow(2,53)+2); document.write(" Poprawna wartość, ale istnieje mniejsza nieobsługiwana<br/>");
+		document.write(Math.pow(2,53)*2); document.write(" Poprawna wartość, ale istnieją mniejsze nieobsługiwane<br/>");
+		
+		document.write("<br/>Problemy reprezentacji mantysy 64bit (IEEE 754):<br/>");
+		document.write(0.1 * 5); document.write("<br/>");
+		document.write(0.15 * 3); document.write("<br/>");
+		document.write(0.1 + 0.2); document.write("<br/>");
+		
+		document.write("<br/>Math.round - zaokrąglij do całkowitej(po przecinku = */10):<br/>");
+		var x;
+		x = Math.round((0.1 + 0.2)*10)/10;
+		document.write(x+"<br/>");
+		x = Math.round((0.15 * 3)*100)/100;
+		document.write(x+"<br/>");
+		
+		document.write("<br/>toFixed(x) - zaokrąglij do (x) miejsca po przecinku:<br/>");
+		x = 0.15 * 3;
+		x = x.toFixed(2);
+		document.write(x+"<br/>");
+		x = 1.005;
+		x = x.toFixed(2);
+		document.write(x+": nie zaokrągla zgodnie z zasadami, a obcina <br/>");
+		
+		document.write("<br/>round(x) [custom] - zaokrąglij do (x) miejsca po przecinku:<br/>");		
+		Number.prototype.round = function(miejsc)	//przebudowanie istniejącej metody
+		{
+			return +(Math.round(this + "e+" + miejsc) + "e-" + miejsc);
+		}		
+		x = 1.005;
+		x = x.round(2);
+		document.write(x+"<br/>");
+		
+		document.write('<div style = "text-align: center;">');
+		document.write("<br/>Rodzaje zaokrąglania:<br/>");
+		var pln = 1000;
+		document.write("Wpłata: " + pln + " PLN <br/><br/>");
+		
+		//przewalutowanie
+		var usd = pln / 4.00835701;
+		usd = Math.floor(usd * 100) / 100;
+		document.write("Saldo (floor): " + usd + " USD <br/><br/>");
+		
+		//Zakupy
+		var zakupy = 23.99;
+		document.write("Zakupy: " + zakupy + " USD <br/>");
+		var prowizja = 0.02 * zakupy;
+		prowizja = Math.ceil(prowizja * 100) / 100;
+		document.write("Prowizja (ceil): " + prowizja + " USD <br/>");
+		
+		//Po zakupach
+		usd = usd - zakupy - prowizja;
+		document.write("Saldo: " + usd + " USD <br/><br/>");
+		
+		//Truncate
+		usd = 225.99;
+		usd = Math.trunc(usd);
+		document.write("Saldo: " + usd + " USD <br/><br/>");
+		
+		document.write("</div>");
+	</script>
+	
+</body>
+</html>
